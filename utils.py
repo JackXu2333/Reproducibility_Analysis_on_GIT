@@ -9,7 +9,7 @@ import pickle
 import torch
 from torch.autograd import Variable
 
-__author__ = "Yifeng Tao"
+__author__ = "Yifeng Tao (Original); Sijie Xu (Reproducibility Analysis)"
 
 
 def bool_ext(rbool):
@@ -178,6 +178,8 @@ def get_minibatch(dataset, index, batch_size, batch_type="train"):
 
 def evaluate(labels, preds, epsilon=1e-4):
   """ Calculate performance metrics given ground truths and prediction results.
+
+  Sijie: This function has been modified to take labels and preds in multiple classes
 
   Parameters
   ----------

@@ -1,27 +1,35 @@
-# Genomic Impact Transformer (GIT)
-
+# Reproducibility Analysis on Genomic Impact Transformer (GIT)
 
 ## Introduction
 
-This repository contains PyTorch implementation of GIT model (and its variants) in the following paper:
+This repository contains PyTorch implementation of GIT model
+and GIT variants from reproducibility analysis by Sijie Xu, and in the original paper by
 Yifeng Tao, Chunhui Cai, William W. Cohen, Xinghua Lu. [From genome to phenome: Predicting multiple cancer phenotypes based on somatic genomic alterations via the genomic impact transformer](https://arxiv.org/abs/1902.00078). Proceedings of the Pacific Symposium on Biocomputing (PSB). 2020.
 
-The preprocessed TCGA dataset, and gene embeddings mentioned in the paper are also released below.
+The preprocessed TCGA dataset, and gene embeddings mentioned in the paper, and reproducibility analysis are also released below.
 
+Link to the Tao et al.'s [github repository](https://github.com/yifengtao/genome-transformer)
 
 ## Prerequisites
 
-The code runs on `Python 2.7`, and following packages are used:
-* `PyTorch 0.1.12_2`, `pandas`, `pickle`, `numpy`, `random`, `argparse`, `os`.
+The code runs on `Python 3.6` (The original implementation by Tao et al. is in `Python 2.7`), and following packages are used:
+* `PyTorch`, `Jupyter Notebook`, `pandas`, `pickle`, `numpy`, `random`, `argparse`, `os`.
 
+The code automatically enable CUDA when available.
 
 ## Data
 
-All the required data can be downloaded to the directory:
+The required data can be downloaded to the directory:
 ```
 cd genome-transformer
 wget www.cs.cmu.edu/~yifengt/paper/2019a/data.tar.gz -O data.tar.gz
 tar -zxvf data.tar.gz
+```
+
+Additionally, the pretrained gene embedding files need to be copied to `data_degraded/` and `data_noBin/` 
+in order to run tests in the reproducibility analysis:
+```
+find data_degraded data_noBin -exec cp data/gene_emb_pretrain.npy {} \;
 ```
 
 ### TCGA dataset
@@ -51,28 +59,35 @@ The parameters of trained GIT model are stored at `data/trained_model.pth`.
 
 ## Replicate experiments
 
-### Train GIT model
+### Vanilla GIT model
 
 You can train the GIT from scratch and then evaluate its performance on test set:
 ```
 python test_run.py
 ```
-
-### Evaluate GIT model
-
-If you have already downloaded the trained parameters of GIT, you can directly evaluate its performance:
-```
-python test_run.py --train_model False
-```
-
-### GIT variants
-
 You may run more GIT variants, e.g., `GIT-init`, `GIT-attn`, `GIT-can` etc., by checking the code and comments of `test_run.py`, or:
 ```
 python test_run.py --help
 ```
 
-## FAQ
+### Reproducibility experiments
+
+Please refer to the [MLP_Testing.ipynb](https://github.com/JackXu2333/Reproducibility_Analysis_on_GIT/blob/master/MLP_Testing.ipynb)
+for code used in verifying baseline result from the original paper. 
+
+Please refer to the [GIT_Testing.ipynb](https://github.com/JackXu2333/Reproducibility_Analysis_on_GIT/blob/master/GIT_Testing.ipynb) 
+for code used in GIT model verifying empirical result from the original paper and performing **modified input test** described in the reproducibility analysis. 
+
+Please also refer to [GIT_Testing_NOBIN.ipynb](https://github.com/JackXu2333/Reproducibility_Analysis_on_GIT/blob/master/GIT_Testing_NOBIN.ipynb)
+for code used in performing **non-binary target test** described in the reproducibility analysis.
+
+The file used in constructing the dataset for the **modified input test** and **non-binary target test**
+can be found via [Data_Uilts.ipynb](https://github.com/JackXu2333/Reproducibility_Analysis_on_GIT/blob/master/Data_Uilts.ipynb)
+
+Note that [utlis.py](https://github.com/JackXu2333/Reproducibility_Analysis_on_GIT/blob/master/utils.py)
+has been modified in order to perform test in the reproducibility analysis, but its usage remains unchanged
+
+## Others
 
 * Q: How to prepare my own input data and run experiments on the new data?
 
@@ -90,9 +105,8 @@ Third, run experiments on the new data:
 python test_run.py --initializtion False --input_dir mydata --output_dir mydata
 ```
 
-## Citation
 
-If you find the data or code from this repository helpful, please cite this [paper](https://arxiv.org/abs/1902.00078):
+If you find the data or code from this repository helpful, please cite the original [paper](https://arxiv.org/abs/1902.00078):
 ```
 @inproceedings{tao2020git,
   title = {From Genome to Phenome: Predicting Multiple Cancer Phenotypes based on Somatic Genomic Alterations via the Genomic Impact Transformer},
