@@ -73,7 +73,7 @@ python test_run.py --help
 ### Reproducibility experiments
 
 Please refer to the [MLP_Testing.ipynb](https://github.com/JackXu2333/Reproducibility_Analysis_on_GIT/blob/master/MLP_Testing.ipynb)
-for code used in verifying baseline result from the original paper. 
+for code used in verifying baseline result from the original paper and performing the **additional baseline test** described in the reproducibility analysis. 
 
 Please refer to the [GIT_Testing.ipynb](https://github.com/JackXu2333/Reproducibility_Analysis_on_GIT/blob/master/GIT_Testing.ipynb) 
 for code used in GIT model verifying empirical result from the original paper and performing **modified input test** described in the reproducibility analysis. 
