@@ -28,6 +28,7 @@ tar -zxvf data.tar.gz
 
 Additionally, the pretrained gene embedding files need to be copied to `data_degraded/` and `data_noBin/` 
 in order to run tests in the reproducibility analysis:
+
 ```
 find data_degraded data_noBin -exec cp data/gene_emb_pretrain.npy {} \;
 ```
@@ -52,10 +53,6 @@ gene_emb_matrix = numpy.load("data/gene_emb_finetune.npy")
 
 It is a 19782 by 512 matrix, where the index of each row can be mapped to a gene name through `data/idx2gene.txt`.
 
-### Trained GIT model
-
-The parameters of trained GIT model are stored at `data/trained_model.pth`.
-
 
 ## Replicate experiments
 
@@ -63,11 +60,11 @@ The parameters of trained GIT model are stored at `data/trained_model.pth`.
 
 You can train the GIT from scratch and then evaluate its performance on test set:
 ```
-python test_run.py
+python3 test_run.py
 ```
 You may run more GIT variants, e.g., `GIT-init`, `GIT-attn`, `GIT-can` etc., by checking the code and comments of `test_run.py`, or:
 ```
-python test_run.py --help
+python3 test_run.py --help
 ```
 
 ### Reproducibility experiments
@@ -87,24 +84,6 @@ can be found via [Data_Uilts.ipynb](https://github.com/JackXu2333/Reproducibilit
 Note that [utlis.py](https://github.com/JackXu2333/Reproducibility_Analysis_on_GIT/blob/master/utils.py)
 has been modified in order to perform test in the reproducibility analysis, but its usage remains unchanged
 
-## Others
-
-* Q: How to prepare my own input data and run experiments on the new data?
-
-* A: You can directly prepare the `dataset.pkl` pickle file. However, we also provide pieces of code (`prepare_dataset.py`) to faciliate you to convert more general data types (`csv` and `txt`) into the `dataset.pkl`.
-
-First, you need to format your own data into three files: `mydata/cancer_type.txt` (each line a cancer type), `deg.csv` (each row a sample, each column an over/under-expressed gene), `sga.txt` (each row a sample name and mutated genes, comma separated).
-
-Second, run the following code to convert and merge these files into a single `mydata/dataset.pkl` file:
-```
-python prepare_dataset.py --input_dir mydata --output_dir mydata
-```
-
-Third, run experiments on the new data:
-```
-python test_run.py --initializtion False --input_dir mydata --output_dir mydata
-```
-
 
 If you find the data or code from this repository helpful, please cite the original [paper](https://arxiv.org/abs/1902.00078):
 ```
@@ -118,4 +97,5 @@ If you find the data or code from this repository helpful, please cite the origi
   year = {2020},
 }
 ```
+
 
